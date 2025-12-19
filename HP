@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spece Car</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  padding: 15px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+th {
+  background: #f0f0f0;
+}
+
+@media (max-width: 600px) {
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <center><h2>Spece Car</h2></center>
+
+  <!-- SEARCH NAME -->
+  <input type="text" id="searchName" placeholder="Search by name...">
+
+  <!-- SEARCH NUMBER -->
+  <input type="text" id="searchNumber" placeholder="Search by number...">
+
+  <div class="buttons">
+    <button onclick="searchData()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<script>
+const data = [
+  { Number:"", name:"Ford Everest Titanium X 2025",year:"2025", cc:2000, hp:207, seats:7, weight:70, Kg:2269, length:4.91, width:1.92, height:1.84 },
+  { Number:"", name:"Ford Evereast Sport 2025",year:"2025",cc:2000, hp:168, seats:7, weight:70, Kg:2269, length:4.91, width:1.92, height:1.84 },
+  { Number:"", name:"Ford Territory", year:"2025",cc:1490, hp:160, seats:5, weight:50, Kg:1750, length:4.58, width:1.86, height:1.67 },
+  { Number:"", name:"Ford Ranger XLT (6AT)",year:"2025", cc:1496, hp:168, seats:5, weight:600, Kg:2155, length:5.37, width:2, height:1.88 },
+  { Number:"", name:"Ford Ranger (10AT)", year:"2025",cc:2000, hp:207, seats:5, weight:600, Kg:2173, length:5.35, width:2, height:1.87 },
+  { Number:"PV3AKFF60SL0044467", name:"Ford Ranger WD", year:"2025", cc:2000, hp:207, seats:5, weight:600, Kg:2340, length:5.37, width:2, height:1.88 },
+  { Number:"", name:"Ford Ranger XL", year:"2025", cc:2000, hp:168, seats:5, Kg:2455, length:5.37, width:2, height:1.88 },
+  { Number:"", name:"Ford Ranger Raptor (10AT)",year:"2025",cc:2000, hp:210, seats:5, weight:300, Kg:2430, length:5.36, width:2, height:1.92 },
+  { Number:"", name:"Ford Ranger Raptor (10AT)", year:"2025",cc:3000, hp:392, seats:5, weight:300, Kg:2430, length:5.36, width:2, height:1.92 },
+  { Number:"", name:"Mercedes Benz C300 2015", year:"2025",cc:2000, hp:207, seats:5, weight:50, Kg:50, length:4.68, width:1.81, height:1.44 }
+
+];
+
+function searchData() {
+  const nameKey = document.getElementById("searchName").value.toLowerCase();
+  const numberKey = document.getElementById("searchNumber").value.toLowerCase();
+  const result = document.getElementById("result");
+
+  const filtered = data.filter(item =>
+    item.name.toLowerCase().includes(nameKey) &&
+    (item.Number ?? "").toLowerCase().includes(numberKey)
+  );
+
+  if (filtered.length === 0) {
+    result.innerHTML = "<p>No data found</p>";
+    return;
+  }
+
+  let table = `
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Year</th>
+      <th>CC</th>
+      <th>HP</th>
+      <th>Seats</th>
+      <th>Weight</th>
+      <th>Kg</th>
+      <th>Length</th>
+      <th>Width</th>
+      <th>Height</th>
+    </tr>`;
+
+  filtered.forEach(item => {
+    table += `
+    <tr>
+      <td>${item.Number ?? "-"}</td>
+      <td>${item.name}</td>
+      <td>${item.year ?? "-"}</td>
+      <td>${item.cc ?? "-"}</td>
+      <td>${item.hp ?? "-"}</td>
+      <td>${item.seats ?? "-"}</td>
+      <td>${item.weight ?? "-"}</td>
+      <td>${item.Kg ?? "-"}</td>
+      <td>${item.length ?? "-"}</td>
+      <td>${item.width ?? "-"}</td>
+      <td>${item.height ?? "-"}</td>
+    </tr>`;
+  });
+
+  table += `</table></div>`;
+  result.innerHTML = table;
+}
+
+function clearSearch() {
+  searchName.value = "";
+  searchNumber.value = "";
+  result.innerHTML = "";
+  searchName.focus();
+}
+</script>
+
+</body>
+</html>
